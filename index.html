@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Alice 
-
-</title>
+<title>For Alice ❤️</title>
 
 <style>
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, serif;
   text-align: center;
   color: white;
-  overflow-x: hidden;
   min-height: 100vh;
-  background: linear-gradient(to top, #0f0f1b 0%, #1c1c3c 50%, #2a2a72 100%);
+  background: linear-gradient(to top, #000000 0%, #1c1c3c 50%, #2a2a72 100%);
   position: relative;
-  z-index: 1;
+  overflow-x: hidden;
 }
 
-/* Sunset glow */
 body::before {
   content: "";
   position: fixed;
@@ -35,26 +31,101 @@ body::before {
   z-index: -1;
 }
 
-/* S Glow */
 .s-symbol {
-  font-size: 120px;
-  color: rgba(255,0,0,0.2);
-  text-shadow: 0 0 25px red, 0 0 50px crimson;
-  animation: pulse 3s infinite;
-  margin-top: 30px;
-}
-
-@keyframes pulse {
-  0%,100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-h1 {
-  font-size: 3em;
-  margin-top: 20px;
+  font-size: 100px;
+  margin-top: 40px;
+  color: rgba(255,0,0,0.3);
+  text-shadow: 0 0 25px red;
 }
 
 .message {
   max-width: 700px;
   margin: 30px auto;
-  font
+  font-size: 1.3em;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  margin: 15px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: crimson;
+  color: white;
+}
+
+#noBtn {
+  background: gray;
+  color: white;
+}
+
+.gallery {
+  margin-top: 40px;
+}
+
+.photos img {
+  width: 220px;
+  height: 280px;
+  object-fit: cover;
+  margin: 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,0,0,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<div class="s-symbol">S</div>
+
+<h1>Alice ❤️</h1>
+
+<div class="message">
+  <p>Some people wait their whole lives for something extraordinary.</p>
+  <p>Clark found Lois.</p>
+  <p>And somehow… I found you.</p>
+  <p>You make my world brighter than a Kansas sunrise.</p>
+  <p>So Alice…</p>
+  <h2>Will you be my Valentine? 💙</h2>
+</div>
+
+<button id="yesBtn">Yes ❤️</button>
+<button id="noBtn">No 😢</button>
+
+<div id="response"></div>
+
+<div class="gallery">
+  <h2>Our Memories 📸</h2>
+  <div class="photos">
+    <img src="image1.jpg">
+    <img src="image2.jpg">
+    <img src="image3.jpg">
+  </div>
+</div>
+
+<audio controls autoplay loop>
+  <source src="save-me.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.getElementById("yesBtn").onclick = function() {
+  document.getElementById("response").innerHTML = 
+  "You just saved my world, Alice ❤️";
+};
+
+document.getElementById("noBtn").onmouseover = function() {
+  this.style.position = "absolute";
+  this.style.left = Math.random() * window.innerWidth + "px";
+  this.style.top = Math.random() * window.innerHeight + "px";
+};
+</script>
+
+</body>
+</html>
+
