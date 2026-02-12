@@ -10,30 +10,70 @@ body {
   margin: 0;
   padding: 0;
   font-family: Georgia, serif;
-  text-align: center;
-  color: white;
-  min-height: 100vh;
-  background: linear-gradient(to top, #000000 0%, #1c1c3c 50%, #2a2a72 100%);
-  position: relative;
-  overflow-x: hidden;
+  background: #111;
+  overflow: hidden;
 }
 
-body::before {
-  content: "";
+/* ========== ENVELOPE SCREEN ========== */
+
+#envelopeScreen {
   position: fixed;
-  bottom: -200px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255,70,70,0.5) 0%, transparent 70%);
-  border-radius: 50%;
-  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #000, #1c1c3c, #2a2a72);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.envelope {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  background: #c0392b;
+  border-radius: 6px;
+  cursor: grab;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #e74c3c;
+  clip-path: polygon(0 0, 100% 0, 50% 60%);
+  transform-origin: top;
+  transition: transform 0.6s ease;
+}
+
+.open .flap {
+  transform: rotateX(180deg);
+}
+
+.instruction {
+  position: absolute;
+  bottom: 30px;
+  color: white;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ========== MAIN SITE ========== */
+
+#mainContent {
+  display: none;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(to top, #000 0%, #1c1c3c 50%, #2a2a72 100%);
+  padding: 30px;
 }
 
 .s-symbol {
   font-size: 100px;
-  margin-top: 40px;
+  margin-top: 20px;
   color: rgba(255,0,0,0.3);
   text-shadow: 0 0 25px red;
 }
@@ -43,7 +83,6 @@ body::before {
   margin: 30px auto;
   font-size: 1.3em;
   line-height: 1.6;
-  padding: 20px;
 }
 
 button {
@@ -65,10 +104,6 @@ button {
   color: white;
 }
 
-.gallery {
-  margin-top: 40px;
-}
-
 .photos img {
   width: 220px;
   height: 280px;
@@ -82,40 +117,83 @@ button {
 
 <body>
 
-<div class="s-symbol">S</div>
-
-<h1>Alice ❤️</h1>
-
-<div class="message">
-  <p>Some people wait their whole lives for something extraordinary.</p>
-  <p>Clark found Lois.</p>
-  <p>And somehow… I found you.</p>
-  <p>You make my world brighter than a Kansas sunrise.</p>
-  <p>So Alice…</p>
-  <h2>Will you be my Valentine? 💙</h2>
+<!-- Envelope Screen -->
+<div id="envelopeScreen">
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+  </div>
+  <div class="instruction">Drag the envelope up to open 💌</div>
 </div>
 
-<button id="yesBtn">Yes ❤️</button>
-<button id="noBtn">No 😢</button>
+<!-- Main Website -->
+<div id="mainContent">
+  <div class="s-symbol">S</div>
 
-<div id="response"></div>
+  <h1>Alice ❤️</h1>
 
-<div class="gallery">
+  <div class="message">
+    <p>Some people wait their whole lives for something extraordinary.</p>
+    <p>Clark found Lois.</p>
+    <p>And somehow… I found you.</p>
+    <p>You make my world brighter than a Kansas sunrise.</p>
+    <p>So Alice…</p>
+    <h2>Will you be my Valentine? 💙</h2>
+  </div>
+
+  <button id="yesBtn">Yes ❤️</button>
+  <button id="noBtn">No 😢</button>
+
+  <div id="response"></div>
+
   <h2>Our Memories 📸</h2>
   <div class="photos">
     <img src="image1.jpg">
     <img src="image2.jpg">
     <img src="image3.jpg">
   </div>
+
+  <audio controls autoplay loop>
+    <source src="save-me.mp3" type="audio/mpeg">
+  </audio>
 </div>
 
-<audio controls autoplay loop>
-  <source src="save-me.mp3" type="audio/mpeg">
-</audio>
-
 <script>
+let envelope = document.getElementById("envelope");
+let envelopeScreen = document.getElementById("envelopeScreen");
+let mainContent = document.getElementById("mainContent");
+
+let startY = 0;
+let dragged = false;
+
+envelope.addEventListener("pointerdown", (e) => {
+  startY = e.clientY;
+  dragged = true;
+});
+
+window.addEventListener("pointermove", (e) => {
+  if (!dragged) return;
+
+  let distance = startY - e.clientY;
+
+  if (distance > 100) {
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+      envelopeScreen.style.display = "none";
+      mainContent.style.display = "block";
+      document.body.style.overflow = "auto";
+    }, 600);
+
+    dragged = false;
+  }
+});
+
+window.addEventListener("pointerup", () => {
+  dragged = false;
+});
+
 document.getElementById("yesBtn").onclick = function() {
-  document.getElementById("response").innerHTML = 
+  document.getElementById("response").innerHTML =
   "You just saved my world, Alice ❤️";
 };
 
@@ -128,4 +206,3 @@ document.getElementById("noBtn").onmouseover = function() {
 
 </body>
 </html>
-
